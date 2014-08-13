@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>LabsReport</title>
+
+  <!-- Bootstrap! from http://getbootstrap.com/getting-started/ -->
+  <!-- put your Bootstrap CSS links above the stylesheet_link_tag -->
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+
+  <!-- put your Bootstrap Javacsript link below the javascript_include_tag -->
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+</head>
+<body class="container">
+
+	  <div class='pull-right'>
+    <% if current_user %>
+      Today is <%= @weekday %>, <%= @month %>/<%= @day %>/<%= @year %>| Logged in as <%= current_user.first_name %> <%= current_user.last_name %> | <%= link_to "Logout", '/logout' %>
+    <% end %>
+  </div>
+
+  <h2><%= link_to 'The LabsReport', '/report' %></h2>
+
+<%= yield %>
+
+</body>
+</html>

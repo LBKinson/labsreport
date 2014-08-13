@@ -1,0 +1,17 @@
+<div>
+  <h2>Welcome to the Labs Report!</h2>
+  Let's find out what's going on...
+
+</div>
+
+
+<h3>Login:</h3>
+
+<%= form_tag '/login' do %>
+
+  Email: <%= text_field_tag :email %><br>
+  Password: <%= password_field_tag :password %><br><br>
+
+  <%= submit_tag "Vroom vroom!", class: 'btn btn-success' %>
+
+<% end %>
