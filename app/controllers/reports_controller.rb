@@ -4,9 +4,9 @@ before_filter :authorize
 
 # GA API access
 def visitor 
-  @SERVICE_ACCOUNT_EMAIL_ADDRESS = '154515577302-e7esj1h0cnnrmulevvujumjv1m3hjk9c@developer.gserviceaccount.com' # looks like 12345@developer.gserviceaccount.com
+  @SERVICE_ACCOUNT_EMAIL_ADDRESS = ENV['SERVICE_ACCOUNT_EMAIL_ADDRESS'] # looks like 12345@developer.gserviceaccount.com
   @PATH_TO_KEY_FILE              = "#{Rails.root}/app/controllers/GA_Dashboard-1f3726b11932.p12"
-  @PROFILE                       = 'ga:83059410' # your GA profile id, looks like 'ga:12345'
+  @PROFILE                       = ENV['PROFILE'] # your GA profile id, looks like 'ga:12345'
 
   require 'json'
   require 'google/api_client'
@@ -78,12 +78,13 @@ end
 
     @result = @client.execute(:api_method => @api_method, :parameters => {
     'ids'        => @PROFILE,
-    'start-date' => Date.new(1970,1,1).to_s,
+    'start-date' => Date.new(2014,8,1).to_s,
     'end-date'   => Date.today.to_s,
     'dimensions' => 'ga:pagePath',
     'metrics'    => 'ga:pageviews',
-    'filters'    => 'ga:pagePath==/url/to/user'
+    # 'filters'    => 'ga:pagePath==/url/to/user'
   })
+
   end
 
   def monthly  
