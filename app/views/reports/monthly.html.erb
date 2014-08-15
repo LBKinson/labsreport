@@ -3,9 +3,10 @@
 <a href="/yearly" class="btn btn-primary btn" role="button">Yearly</a>
 
 <h2>Month To Date</h2>
-<%= @MTD_month %>/<%= @MTD_day %>/<%= @MTD_year %> - <%= @today_month %>/<%= @today_day %>/<%= @today_year %> vs <%= @MTD2_month %>/<%= @MTD2_day %>/<%= @MTD2_year %> - <%= @MTD3_month %>/<%= @MTD3_day %>/<%= @MTD3_year %>
+<%= @MTD %> to <%= @today %> &nbsp;&nbsp;<strong>vs</strong>&nbsp;&nbsp; <%= @MTD2 %> to <%= @MTD3 %>
+
 
 <br><br>
 
 <h2>Month Over Month</h2>
-<%= @LM_month %>/<%= @LM_day %>/<%= @LM_year %> - <%= @today_month %>/<%= @today_day %>/<%= @today_year %> vs <%= @LM2_month %>/<%= @LM2_day %>/<%= @LM2_year %> - <%= @LM3_month %>/<%= @LM3_day %>/<%= @LM3_year %>
+<%= @LM %> to <%= @today %> &nbsp;&nbsp;<strong>vs</strong>&nbsp;&nbsp; <%= @LM2 %> to <%= @LM3 %>
