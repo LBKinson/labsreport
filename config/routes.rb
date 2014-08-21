@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get '/' => 'pages#home'
   root to: 'pagess#home'
 
-  # get '/signup' => 'users#new'
+  get '/signup' => 'users#new'
   post '/users' => 'users#create'
 
   # login routes
