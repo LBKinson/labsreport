@@ -33,7 +33,7 @@ gem 'httparty'
 
 # The Google API Ruby Client makes it trivial to discover and access supported APIs. Read more: https://github.com/google/google-api-ruby-client
 gem 'google-api-client'
-
+gem 'pry-rails'
 # Use unicorn as the app server
 # gem 'unicorn'
 

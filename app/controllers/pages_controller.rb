@@ -4,7 +4,7 @@ def time
     # defines 'time' for header comparitive dates
     time = Time.new
     @weekday = time.strftime("%A")
-    @today = time.strftime('%m/%d/%y')
+    @header_today = time.strftime('%Y-%m-%d')
 end
 
   def home

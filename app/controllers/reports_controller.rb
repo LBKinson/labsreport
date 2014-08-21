@@ -4,9 +4,14 @@ before_filter :authorize
 
 # GA API access
 def visitor 
-  @SERVICE_ACCOUNT_EMAIL_ADDRESS = ENV['SERVICE_ACCOUNT_EMAIL_ADDRESS'] # looks like 12345@developer.gserviceaccount.com
+  @SERVICE_ACCOUNT_EMAIL_ADDRESS = '154515577302-e7esj1h0cnnrmulevvujumjv1m3hjk9c@developer.gserviceaccount.com' # looks like 12345@developer.gserviceaccount.com
   @PATH_TO_KEY_FILE              = "#{Rails.root}/app/controllers/GA_Dashboard-1f3726b11932.p12"
-  @PROFILE                       = ENV['PROFILE'] # your GA profile id, looks like 'ga:12345'
+  @PROFILE                       = 'ga:66376614' # your GA profile id, looks like 'ga:12345'
+
+
+  # @SERVICE_ACCOUNT_EMAIL_ADDRESS = ENV['GA_SERVICE_ACCOUNT_EMAIL_ADDRESS']
+  # @PATH_TO_KEY_FILE              = "#{Rails.root}/app/controllers/GA_Dashboard-1f3726b11932.p12"
+  # @PROFILE                       = ENV['GA_PROFILE']
 
   require 'json'
   require 'google/api_client'
@@ -31,39 +36,42 @@ def time
     # defines 'time' for header comparitive dates
     time = Time.new
     @weekday = time.strftime("%A")
-    @today = time.strftime('%m/%d/%y')
+    @header_today = time.strftime('%Y-%m-%d')
+    
+    # real day minus 1 for data's sake
+    @today = (time-(60 * 60 * 24 * 1)).strftime('%Y-%m-%d')
    
     # WEEKLY DATES
     # real day minus 1 for data's sake
-    @LW = (time-(60 * 60 * 24 * 7)).strftime('%m/%d/%y')
-    @LW2 = (time-(60 * 60 * 24 * 14)).strftime('%m/%d/%y')
-    @LW3 = (time-(60 * 60 * 24 * 8)).strftime('%m/%d/%y')
+    @LW = (time-(60 * 60 * 24 * 7)).strftime('%Y-%m-%d')
+    @LW2 = (time-(60 * 60 * 24 * 14)).strftime('%Y-%m-%d')
+    @LW3 = (time-(60 * 60 * 24 * 8)).strftime('%Y-%m-%d')
 
 
     # MONTHLY DATES
     # real day minus 1 for data's sake
     # Month to date
-    @MTD = time.beginning_of_month.strftime('%m/%d/%y')
-    @MTD2 = (time-(60 * 60 * 24 * 366)).beginning_of_month.strftime('%m/%d/%y')
-    @MTD3 = (time-(60 * 60 * 24 * 366)).strftime('%m/%d/%y')
+    @MTD = time.beginning_of_month.strftime('%Y-%m-%d')
+    @MTD2 = (time-(60 * 60 * 24 * 366)).beginning_of_month.strftime('%Y-%m-%d')
+    @MTD3 = (time-(60 * 60 * 24 * 366)).strftime('%Y-%m-%d')
 
     # Month over month
-    @LM = (time-(60 * 60 * 24 * 30)).strftime('%m/%d/%y')
-    @LM2 = (time-(60 * 60 * 24 * 60)).strftime('%m/%d/%y')
-    @LM3 = (time-(60 * 60 * 24 * 31)).strftime('%m/%d/%y')
+    @LM = (time-(60 * 60 * 24 * 30)).strftime('%Y-%m-%d')
+    @LM2 = (time-(60 * 60 * 24 * 60)).strftime('%Y-%m-%d')
+    @LM3 = (time-(60 * 60 * 24 * 31)).strftime('%Y-%m-%d')
 
 
     # YEARLY DATES
     # real day minus 1 for data's sake
     # Year to date
-    @YTD = time.beginning_of_year.strftime('%m/%d/%y')
-    @YTD2 = (time-(60 * 60 * 24 * 366)).beginning_of_year.strftime('%m/%d/%y')
-    @YTD3 = (time-(60 * 60 * 24 * 366)).strftime('%m/%d/%y')
+    @YTD = time.beginning_of_year.strftime('%Y-%m-%d')
+    @YTD2 = (time-(60 * 60 * 24 * 366)).beginning_of_year.strftime('%Y-%m-%d')
+    @YTD3 = (time-(60 * 60 * 24 * 366)).strftime('%Y-%m-%d')
 
     # Year over year
-    @LY = (time-(60 * 60 * 24 * 365)).strftime('%m/%d/%y')
-    @LY2 = (time-(60 * 60 * 24 * 730)).strftime('%m/%d/%y')
-    @LY3 = (time-(60 * 60 * 24 * 366)).strftime('%m/%d/%y')
+    @LY = (time-(60 * 60 * 24 * 365)).strftime('%Y-%m-%d')
+    @LY2 = (time-(60 * 60 * 24 * 730)).strftime('%Y-%m-%d')
+    @LY3 = (time-(60 * 60 * 24 * 366)).strftime('%Y-%m-%d')
 
 end
 
@@ -76,25 +84,557 @@ end
     time
     visitor
 
-    @result = @client.execute(:api_method => @api_method, :parameters => {
+    # this year pageviews
+    this_year_result = @client.execute(:api_method => @api_method, :parameters => {
     'ids'        => @PROFILE,
-    'start-date' => Date.new(2014,8,1).to_s,
-    'end-date'   => Date.today.to_s,
-    'dimensions' => 'ga:pagePath',
-    'metrics'    => 'ga:pageviews',
+    'start-date' => @LW,
+    'end-date'   => @today,
+    'dimensions' => 'ga:pagepath',
+    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
     # 'filters'    => 'ga:pagePath==/url/to/user'
-  })
+ }).data.totals_for_all_results
+
+
+    # this year data variables
+    @tyVisits = this_year_result['ga:sessions'].to_f
+    @tyUniqueVisitors = this_year_result['ga:users'].to_f
+    @tyPageviews = this_year_result['ga:pageviews'].to_f
+    @tyPPV = this_year_result['ga:pageviewsPerSession'].to_f.round(2)
+    @tyBounce = this_year_result['ga:bounceRate'].to_f.round(2)
+    @avgTYVisitDuration = Time.at(this_year_result['ga:avgSessionDuration'].to_f).utc.strftime("%H:%M:%S")
+    @avgTYVD = @avgTYVisitDuration.to_f
+
+
+   # binding.pry
+
+    #last year
+    last_year_result = @client.execute(:api_method => @api_method, :parameters => {
+    'ids'        => @PROFILE,
+    'start-date' => @LW2,
+    'end-date'   => @LW3,
+    'dimensions' => 'ga:pagePath',
+    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+  }).data.totals_for_all_results
+
+
+    # last year data variables
+    @lyVisits = last_year_result['ga:sessions'].to_f
+    @lyUniqueVisitors = last_year_result['ga:users'].to_f
+    @lyPageviews = last_year_result['ga:pageviews'].to_f
+    @lyPPV = last_year_result['ga:pageviewsPerSession'].to_f.round(2)
+    @lyBounce = last_year_result['ga:bounceRate'].to_f.round(2)
+    @avgLYVisitDuration = Time.at(last_year_result['ga:avgSessionDuration'].to_f).utc.strftime("%H:%M:%S")
+    @avgLYVD = @avgLYVisitDuration.to_f
+
+    # binding.pry
+
+    # row color logic
+    # if TY > LY @row_color = "success"
+    # if TY < LY @row_color = "warning"
+    # if TY == LY @row_color = "active"
+    if @tyVisits > @lyVisits
+      @TYrow_color = "success"
+    elsif @tyVisits < @lyVisits
+      @TYrow_color = "danger"
+    else 
+      @TYrow_color = "active"
+    end
+
+    if @tyUniqueVisitors > @lyUniqueVisitors
+      @UVrow_color = "success"
+    elsif @tyUniqueVisitors < @lyUniqueVisitors
+      @UVrow_color = "danger"
+    else 
+      @UVrow_color = "active"
+    end
+      
+    if @tyPageviews > @lyPageviews
+      @PVrow_color = "success"
+    elsif @tyPageviews < @lyPageviews
+      @PVrow_color = "danger"
+    else 
+      @PVrow_color = "active"
+    end
+
+    # ADD row logic for Photo Views!
+    #
+    # if @tyPageviews > @lyPageviews
+    #   @PVrow_color = "success"
+    # elsif @tyPageviews < @lyPageviews
+    #   @PVrow_color = "danger"
+    # else 
+    #   @PVrow_color = "active"
+    # end
+
+    if @tyPPV > @lyPPV
+      @PPVrow_color = "success"
+    elsif @tyPPV < @lyPPV
+      @PPVrow_color = "danger"
+    else 
+      @PPVrow_color = "active"
+    end
+
+    if @tyBounce < @lyBounce
+      @Brow_color = "success"
+    elsif @tyBounce > @lyBounce
+      @Brow_color = "danger"
+    else 
+      @Brow_color = "active"
+    end
+
+    if @avgTYVisitDuration > @avgLYVisitDuration
+      @VDrow_color = "success"
+    elsif @avgTYVisitDuration < @avgLYVisitDuration
+      @VDrow_color = "danger"
+    else 
+      @VDrow_color = "active"
+    end
 
   end
 
   def monthly  
     time
     visitor
+
+    # MONTH OVER MONTH
+    #
+    # this year pageviews
+    this_year_result2 = @client.execute(:api_method => @api_method, :parameters => {
+    'ids'        => @PROFILE,
+    'start-date' => @LM,
+    'end-date'   => @today,
+    'dimensions' => 'ga:pagepath',
+    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+    # 'filters'    => 'ga:pagePath==/url/to/user'
+ }).data.totals_for_all_results
+
+
+    # this year data variables
+    @tyVisits2 = this_year_result2['ga:sessions'].to_f
+    @tyUniqueVisitors2 = this_year_result2['ga:users'].to_f
+    @tyPageviews2 = this_year_result2['ga:pageviews'].to_f
+    @tyPPV2 = this_year_result2['ga:pageviewsPerSession'].to_f.round(2)
+    @tyBounce2 = this_year_result2['ga:bounceRate'].to_f.round(2)
+    @avgTYVisitDuration2 = Time.at(this_year_result2['ga:avgSessionDuration'].to_f).utc.strftime("%H:%M:%S")
+    @avgTYVD2 = this_year_result2['ga:avgSessionDuration'].to_f
+
+
+   # binding.pry
+
+    #last year
+    last_year_result2 = @client.execute(:api_method => @api_method, :parameters => {
+    'ids'        => @PROFILE,
+    'start-date' => @LM2,
+    'end-date'   => @LM3,
+    'dimensions' => 'ga:pagePath',
+    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+  }).data.totals_for_all_results
+
+
+    # last year data variables
+    @lyVisits2 = last_year_result2['ga:sessions'].to_f
+    @lyUniqueVisitors2 = last_year_result2['ga:users'].to_f
+    @lyPageviews2 = last_year_result2['ga:pageviews'].to_f
+    @lyPPV2 = last_year_result2['ga:pageviewsPerSession'].to_f.round(2)
+    @lyBounce2 = last_year_result2['ga:bounceRate'].to_f.round(2)
+    @avgLYVisitDuration2 = Time.at(last_year_result2['ga:avgSessionDuration'].to_f).utc.strftime("%H:%M:%S")
+    @avgLYVD2 = last_year_result2['ga:avgSessionDuration'].to_f
+
+    # binding.pry
+
+    # row color logic
+    # if TY > LY @row_color = "success"
+    # if TY < LY @row_color = "warning"
+    # if TY == LY @row_color = "active"
+    if @tyVisits2 > @lyVisits2
+      @TYrow_color2 = "success"
+    elsif @tyVisits2 < @lyVisits2
+      @TYrow_color2 = "danger"
+    else 
+      @TYrow_color2 = "active"
+    end
+
+    if @tyUniqueVisitors2 > @lyUniqueVisitors2
+      @UVrow_color2 = "success"
+    elsif @tyUniqueVisitors2 < @lyUniqueVisitors2
+      @UVrow_color2 = "danger"
+    else 
+      @UVrow_color2 = "active"
+    end
+      
+    if @tyPageviews2 > @lyPageviews2
+      @PVrow_color2 = "success"
+    elsif @tyPageviews2 < @lyPageviews2
+      @PVrow_color2 = "danger"
+    else 
+      @PVrow_color2 = "active"
+    end
+
+    # ADD row logic for Photo Views!
+    #
+    # if @tyPageviews2 > @lyPageviews2
+    #   @PVrow_color2 = "success"
+    # elsif @tyPageviews2 < @lyPageviews2
+    #   @PVrow_color2 = "danger"
+    # else 
+    #   @PVrow_color2 = "active"
+    # end
+
+    if @tyPPV2 > @lyPPV2
+      @PPVrow_color2 = "success"
+    elsif @tyPPV2 < @lyPPV2
+      @PPVrow_color2 = "danger"
+    else 
+      @PPVrow_color2 = "active"
+    end
+
+    if @tyBounce2 < @lyBounce2
+      @Brow_color2 = "success"
+    elsif @tyBounce2 > @lyBounce2
+      @Brow_color2 = "danger"
+    else 
+      @Brow_color2 = "active"
+    end
+
+    if @avgTYVisitDuration2 > @avgLYVisitDuration2
+      @VDrow_color2 = "success"
+    elsif @avgTYVisitDuration2 < @avgLYVisitDuration2
+      @VDrow_color2 = "danger"
+    else 
+      @VDrow_color2 = "active"
+    end
+
+
+    # MONTH TO DATE
+    #
+    # this year pageviews
+    this_year_result = @client.execute(:api_method => @api_method, :parameters => {
+    'ids'        => @PROFILE,
+    'start-date' => @MTD,
+    'end-date'   => @today,
+    'dimensions' => 'ga:pagepath',
+    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+    # 'filters'    => 'ga:pagePath==/url/to/user'
+ }).data.totals_for_all_results
+
+
+    # this year data variables
+    @tyVisits = this_year_result['ga:sessions'].to_f
+    @tyUniqueVisitors = this_year_result['ga:users'].to_f
+    @tyPageviews = this_year_result['ga:pageviews'].to_f
+    @tyPPV = this_year_result['ga:pageviewsPerSession'].to_f.round(2)
+    @tyBounce = this_year_result['ga:bounceRate'].to_f.round(2)
+    @avgTYVisitDuration = Time.at(this_year_result['ga:avgSessionDuration'].to_f).utc.strftime("%H:%M:%S")
+    @avgTYVD = this_year_result['ga:avgSessionDuration'].to_f
+
+
+   # binding.pry
+
+    #last year
+    last_year_result = @client.execute(:api_method => @api_method, :parameters => {
+    'ids'        => @PROFILE,
+    'start-date' => @MTD2,
+    'end-date'   => @MTD3,
+    'dimensions' => 'ga:pagePath',
+    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+  }).data.totals_for_all_results
+
+
+    # last year data variables
+    @lyVisits = last_year_result['ga:sessions'].to_f
+    @lyUniqueVisitors = last_year_result['ga:users'].to_f
+    @lyPageviews = last_year_result['ga:pageviews'].to_f
+    @lyPPV = last_year_result['ga:pageviewsPerSession'].to_f.round(2)
+    @lyBounce = last_year_result['ga:bounceRate'].to_f.round(2)
+    @avgLYVisitDuration = Time.at(last_year_result['ga:avgSessionDuration'].to_f).utc.strftime("%H:%M:%S")
+    @avgLYVD = last_year_result['ga:avgSessionDuration'].to_f
+
+  #  binding.pry
+
+    # row color logic
+    # if TY > LY @row_color = "success"
+    # if TY < LY @row_color = "warning"
+    # if TY == LY @row_color = "active"
+    if @tyVisits > @lyVisits
+      @TYrow_color = "success"
+    elsif @tyVisits < @lyVisits
+      @TYrow_color = "danger"
+    else 
+      @TYrow_color = "active"
+    end
+
+    if @tyUniqueVisitors > @lyUniqueVisitors
+      @UVrow_color = "success"
+    elsif @tyUniqueVisitors < @lyUniqueVisitors
+      @UVrow_color = "danger"
+    else 
+      @UVrow_color = "active"
+    end
+      
+    if @tyPageviews > @lyPageviews
+      @PVrow_color = "success"
+    elsif @tyPageviews < @lyPageviews
+      @PVrow_color = "danger"
+    else 
+      @PVrow_color = "active"
+    end
+
+    # ADD row logic for Photo Views!
+    #
+    # if @tyPageviews > @lyPageviews
+    #   @PVrow_color = "success"
+    # elsif @tyPageviews < @lyPageviews
+    #   @PVrow_color = "danger"
+    # else 
+    #   @PVrow_color = "active"
+    # end
+
+    if @tyPPV > @lyPPV
+      @PPVrow_color = "success"
+    elsif @tyPPV < @lyPPV
+      @PPVrow_color = "danger"
+    else 
+      @PPVrow_color = "active"
+    end
+
+    if @tyBounce < @lyBounce
+      @Brow_color = "success"
+    elsif @tyBounce > @lyBounce
+      @Brow_color = "danger"
+    else 
+      @Brow_color = "active"
+    end
+
+    if @avgTYVisitDuration > @avgLYVisitDuration
+      @VDrow_color = "success"
+    elsif @avgTYVisitDuration < @avgLYVisitDuration
+      @VDrow_color = "danger"
+    else 
+      @VDrow_color = "active"
+    end
+
   end
 
   def yearly
     time
     visitor
+
+    # YEAR OVER YEAR
+    #
+    # this year pageviews
+    this_year_result2 = @client.execute(:api_method => @api_method, :parameters => {
+    'ids'        => @PROFILE,
+    'start-date' => @LY,
+    'end-date'   => @today,
+    'dimensions' => 'ga:pagepath',
+    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+    # 'filters'    => 'ga:pagePath==/url/to/user'
+ }).data.totals_for_all_results
+
+
+    # this year data variables
+    @tyVisits2 = this_year_result2['ga:sessions'].to_f
+    @tyUniqueVisitors2 = this_year_result2['ga:users'].to_f
+    @tyPageviews2 = this_year_result2['ga:pageviews'].to_f
+    @tyPPV2 = this_year_result2['ga:pageviewsPerSession'].to_f.round(2)
+    @tyBounce2 = this_year_result2['ga:bounceRate'].to_f.round(2)
+    @avgTYVisitDuration2 = Time.at(this_year_result2['ga:avgSessionDuration'].to_f).utc.strftime("%H:%M:%S")
+    @avgTYVD2 = this_year_result2['ga:avgSessionDuration'].to_f
+
+
+   # binding.pry
+
+    #last year
+    last_year_result2 = @client.execute(:api_method => @api_method, :parameters => {
+    'ids'        => @PROFILE,
+    'start-date' => @LY2,
+    'end-date'   => @LY3,
+    'dimensions' => 'ga:pagePath',
+    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+  }).data.totals_for_all_results
+
+
+    # last year data variables
+    @lyVisits2 = last_year_result2['ga:sessions'].to_f
+    @lyUniqueVisitors2 = last_year_result2['ga:users'].to_f
+    @lyPageviews2 = last_year_result2['ga:pageviews'].to_f
+    @lyPPV2 = last_year_result2['ga:pageviewsPerSession'].to_f.round(2)
+    @lyBounce2 = last_year_result2['ga:bounceRate'].to_f.round(2)
+    @avgLYVisitDuration2 = Time.at(last_year_result2['ga:avgSessionDuration'].to_f).utc.strftime("%H:%M:%S")
+    @avgLYVD2 = last_year_result2['ga:avgSessionDuration'].to_f
+
+    # binding.pry
+
+    # row color logic
+    # if TY > LY @row_color = "success"
+    # if TY < LY @row_color = "warning"
+    # if TY == LY @row_color = "active"
+    if @tyVisits2 > @lyVisits2
+      @TYrow_color2 = "success"
+    elsif @tyVisits2 < @lyVisits2
+      @TYrow_color2 = "danger"
+    else 
+      @TYrow_color2 = "active"
+    end
+
+    if @tyUniqueVisitors2 > @lyUniqueVisitors2
+      @UVrow_color2 = "success"
+    elsif @tyUniqueVisitors2 < @lyUniqueVisitors2
+      @UVrow_color2 = "danger"
+    else 
+      @UVrow_color2 = "active"
+    end
+      
+    if @tyPageviews2 > @lyPageviews2
+      @PVrow_color2 = "success"
+    elsif @tyPageviews2 < @lyPageviews2
+      @PVrow_color2 = "danger"
+    else 
+      @PVrow_color2 = "active"
+    end
+
+    # ADD row logic for Photo Views!
+    #
+    # if @tyPageviews2 > @lyPageviews2
+    #   @PVrow_color2 = "success"
+    # elsif @tyPageviews2 < @lyPageviews2
+    #   @PVrow_color2 = "danger"
+    # else 
+    #   @PVrow_color2 = "active"
+    # end
+
+    if @tyPPV2 > @lyPPV2
+      @PPVrow_color2 = "success"
+    elsif @tyPPV2 < @lyPPV2
+      @PPVrow_color2 = "danger"
+    else 
+      @PPVrow_color2 = "active"
+    end
+
+    if @tyBounce2 < @lyBounce2
+      @Brow_color2 = "success"
+    elsif @tyBounce2 > @lyBounce2
+      @Brow_color2 = "danger"
+    else 
+      @Brow_color2 = "active"
+    end
+
+    if @avgTYVisitDuration2 > @avgLYVisitDuration2
+      @VDrow_color2 = "success"
+    elsif @avgTYVisitDuration2 < @avgLYVisitDuration2
+      @VDrow_color2 = "danger"
+    else 
+      @VDrow_color2 = "active"
+    end
+
+
+    # MONTH TO DATE
+    #
+    # this year pageviews
+    this_year_result = @client.execute(:api_method => @api_method, :parameters => {
+    'ids'        => @PROFILE,
+    'start-date' => @MTD,
+    'end-date'   => @today,
+    'dimensions' => 'ga:pagepath',
+    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+    # 'filters'    => 'ga:pagePath==/url/to/user'
+ }).data.totals_for_all_results
+
+
+    # this year data variables
+    @tyVisits = this_year_result['ga:sessions'].to_f
+    @tyUniqueVisitors = this_year_result['ga:users'].to_f
+    @tyPageviews = this_year_result['ga:pageviews'].to_f
+    @tyPPV = this_year_result['ga:pageviewsPerSession'].to_f.round(2)
+    @tyBounce = this_year_result['ga:bounceRate'].to_f.round(2)
+    @avgTYVisitDuration = Time.at(this_year_result['ga:avgSessionDuration'].to_f).utc.strftime("%H:%M:%S")
+    @avgTYVD = this_year_result['ga:avgSessionDuration'].to_f
+
+
+   # binding.pry
+
+    #last year
+    last_year_result = @client.execute(:api_method => @api_method, :parameters => {
+    'ids'        => @PROFILE,
+    'start-date' => @MTD2,
+    'end-date'   => @MTD3,
+    'dimensions' => 'ga:pagePath',
+    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+  }).data.totals_for_all_results
+
+
+    # last year data variables
+    @lyVisits = last_year_result['ga:sessions'].to_f
+    @lyUniqueVisitors = last_year_result['ga:users'].to_f
+    @lyPageviews = last_year_result['ga:pageviews'].to_f
+    @lyPPV = last_year_result['ga:pageviewsPerSession'].to_f.round(2)
+    @lyBounce = last_year_result['ga:bounceRate'].to_f.round(2)
+    @avgLYVisitDuration = Time.at(last_year_result['ga:avgSessionDuration'].to_f).utc.strftime("%H:%M:%S")
+    @avgLYVD = last_year_result['ga:avgSessionDuration'].to_f
+
+  #  binding.pry
+
+    # row color logic
+    # if TY > LY @row_color = "success"
+    # if TY < LY @row_color = "warning"
+    # if TY == LY @row_color = "active"
+    if @tyVisits > @lyVisits
+      @TYrow_color = "success"
+    elsif @tyVisits < @lyVisits
+      @TYrow_color = "danger"
+    else 
+      @TYrow_color = "active"
+    end
+
+    if @tyUniqueVisitors > @lyUniqueVisitors
+      @UVrow_color = "success"
+    elsif @tyUniqueVisitors < @lyUniqueVisitors
+      @UVrow_color = "danger"
+    else 
+      @UVrow_color = "active"
+    end
+      
+    if @tyPageviews > @lyPageviews
+      @PVrow_color = "success"
+    elsif @tyPageviews < @lyPageviews
+      @PVrow_color = "danger"
+    else 
+      @PVrow_color = "active"
+    end
+
+    # ADD row logic for Photo Views!
+    #
+    # if @tyPageviews > @lyPageviews
+    #   @PVrow_color = "success"
+    # elsif @tyPageviews < @lyPageviews
+    #   @PVrow_color = "danger"
+    # else 
+    #   @PVrow_color = "active"
+    # end
+
+    if @tyPPV > @lyPPV
+      @PPVrow_color = "success"
+    elsif @tyPPV < @lyPPV
+      @PPVrow_color = "danger"
+    else 
+      @PPVrow_color = "active"
+    end
+
+    if @tyBounce < @lyBounce
+      @Brow_color = "success"
+    elsif @tyBounce > @lyBounce
+      @Brow_color = "danger"
+    else 
+      @Brow_color = "active"
+    end
+
+    if @avgTYVisitDuration > @avgLYVisitDuration
+      @VDrow_color = "success"
+    elsif @avgTYVisitDuration < @avgLYVisitDuration
+      @VDrow_color = "danger"
+    else 
+      @VDrow_color = "active"
+    end
   end
 
 end

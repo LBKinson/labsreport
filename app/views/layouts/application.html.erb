@@ -23,7 +23,7 @@
 
 	  <div class='pull-right'>
     <% if current_user %>
-      Today is <%= @weekday %>, <%= @today %>| Logged in as <%= current_user.first_name %> <%= current_user.last_name %> | <%= link_to "Logout", '/logout' %>
+      Today is <%= @weekday %>, <%= @header_today %>| Logged in as <%= current_user.first_name %> <%= current_user.last_name %> | <%= link_to "Logout", '/logout' %>
     <% end %>
   </div>
 
