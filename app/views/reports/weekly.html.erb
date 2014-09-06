@@ -21,7 +21,7 @@
   </tr>
   <tr class= <%= @PHrow_color %>>
   	<td>Photo Views: </td>
-  	<td> TW TBD </td><td> LW TBD </td><td> TBD % </td>
+  	<td> <%= number_with_delimiter(@tyPhotoViews.round, :delimiter => ',') %>  </td><td> <%= number_with_delimiter(@lyPhotoViews.round, :delimiter => ',') %> </td><td> <%= (((@tyPhotoViews - @lyPhotoViews) / @lyPhotoViews)*100).round(2) %>% </td>
   </tr>
     <tr class= <%= @PPVrow_color %>>
   	<td>Pageviews Per Visit: </td>
@@ -65,3 +65,6 @@ Top Traffic Sources:
 </table>
 
 <br><br><br> -->
+
+
+
