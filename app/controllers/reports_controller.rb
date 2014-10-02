@@ -84,6 +84,21 @@ end
     time
     visitor
 
+    # fucking around
+    result = @client.execute(:api_method => @api_method, :parameters => {
+    'ids'        => @PROFILE,
+    'start-date' => @LW,
+    'end-date'   => @today,
+    'dimensions' => 'ga:source',
+    'metrics'    => 'ga:sessions',
+    'sort'       => '-ga:sessions'
+    # 'filters'    => 'ga:pagePath==/url/to/user'
+ }).data
+
+    @generic_result = result.methods
+
+
+
     # this year visits, uniques, pageviews, ppvs, bounce, visit duration
     this_year_result = @client.execute(:api_method => @api_method, :parameters => {
     'ids'        => @PROFILE,

@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   get '/' => 'pages#home'
   root to: 'pagess#home'
 
+  # uncomment the get '/signup' line (then commit, push, heroku) to add another login. hidden for now
+  #
   # get '/signup' => 'users#new'
   post '/users' => 'users#create'
 
