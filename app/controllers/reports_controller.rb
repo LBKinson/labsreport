@@ -1,6 +1,6 @@
 class ReportsController < ApplicationController
 
-#before_filter :authorize
+before_filter :authorize
 
 # GA API access
 def visitor 
