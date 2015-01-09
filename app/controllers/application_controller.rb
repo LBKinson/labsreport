@@ -12,4 +12,6 @@ class ApplicationController < ActionController::Base
     redirect_to '/' unless current_user
   end
 
+
+
 end
