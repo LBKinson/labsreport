@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   # uncomment the get '/signup' line (then commit, push, heroku) to add another login. hidden for now
   #
-  get '/signup' => 'users#new'
+  # get '/signup' => 'users#new'
   post '/users' => 'users#create'
 
   # login routes
