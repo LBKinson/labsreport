@@ -1,6 +1,6 @@
 class ReportsController < ApplicationController
 
-before_filter :authorize
+#before_filter :authorize
 
 # GA API access
 def visitor 
@@ -90,12 +90,14 @@ end
     'start-date' => @LW,
     'end-date'   => @today,
     'dimensions' => 'ga:source',
-    'metrics'    => 'ga:sessions',
-    'sort'       => '-ga:sessions'
+    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+    # 'sort'       => '-ga:sessions'
     # 'filters'    => 'ga:pagePath==/url/to/user'
  }).data
 
-    @generic_result = result.methods
+    
+@generic_result = result.inspect
+
 
 
 
@@ -104,10 +106,13 @@ end
     'ids'        => @PROFILE,
     'start-date' => @LW,
     'end-date'   => @today,
-    'dimensions' => 'ga:pagepath',
+    'dimensions' => 'ga:pagePath',
     'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
     # 'filters'    => 'ga:pagePath==/url/to/user'
  }).data.totals_for_all_results
+
+    @generic_result2 = this_year_result.inspect
+
 
     # this year 'galleries'
     photoViewsGalleries = @client.execute(:api_method => @api_method, :parameters => {
@@ -115,7 +120,7 @@ end
     'start-date' => @LW,
     'end-date'   => @today,
     'dimensions' => 'ga:pagePath',
-    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+    'metrics'    => 'ga:pageviews',
     'filters'    => 'ga:pagePath=@galleries'
  }).data.totals_for_all_results
 
@@ -125,7 +130,7 @@ end
     'start-date' => @LW,
     'end-date'   => @today,
     'dimensions' => 'ga:pagePath',
-    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+    'metrics'    => 'ga:pageviews',
     'filters'    => 'ga:pagePath=@artists'
  }).data.totals_for_all_results
 
@@ -135,7 +140,7 @@ end
     'start-date' => @LW,
     'end-date'   => @today,
     'dimensions' => 'ga:pagePath',
-    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+    'metrics'    => 'ga:pageviews',
     'filters'    => 'ga:pagePath=@first-look'
  }).data.totals_for_all_results
 
@@ -157,7 +162,7 @@ end
     'ids'        => @PROFILE,
     'start-date' => @LW2,
     'end-date'   => @LW3,
-    'dimensions' => 'ga:pagePath',
+    'dimensions' => 'ga:source',
     'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
   }).data.totals_for_all_results
 
@@ -167,7 +172,7 @@ end
     'start-date' => @LW2,
     'end-date'   => @LW3,
     'dimensions' => 'ga:pagePath',
-    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+    'metrics'    => 'ga:pageviews',
     'filters'    => 'ga:pagePath=@galleries'
  }).data.totals_for_all_results
 
@@ -177,7 +182,7 @@ end
     'start-date' => @LW2,
     'end-date'   => @LW3,
     'dimensions' => 'ga:pagePath',
-    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+    'metrics'    => 'ga:pageviews',
     'filters'    => 'ga:pagePath=@artists'
  }).data.totals_for_all_results
 
@@ -187,7 +192,7 @@ end
     'start-date' => @LW2,
     'end-date'   => @LW3,
     'dimensions' => 'ga:pagePath',
-    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+    'metrics'    => 'ga:pageviews',
     'filters'    => 'ga:pagePath=@first-look'
  }).data.totals_for_all_results
 
@@ -288,7 +293,7 @@ end
     'start-date' => @LM,
     'end-date'   => @today,
     'dimensions' => 'ga:pagePath',
-    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+    'metrics'    => 'ga:pageviews',
     'filters'    => 'ga:pagePath=@galleries'
  }).data.totals_for_all_results
 
@@ -298,7 +303,7 @@ end
     'start-date' => @LM,
     'end-date'   => @today,
     'dimensions' => 'ga:pagePath',
-    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+    'metrics'    => 'ga:pageviews',
     'filters'    => 'ga:pagePath=@artists'
  }).data.totals_for_all_results
 
@@ -308,7 +313,7 @@ end
     'start-date' => @LM,
     'end-date'   => @today,
     'dimensions' => 'ga:pagePath',
-    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+    'metrics'    => 'ga:pageviews',
     'filters'    => 'ga:pagePath=@first-look'
  }).data.totals_for_all_results
 
@@ -341,7 +346,7 @@ end
     'start-date' => @LM2,
     'end-date'   => @LM3,
     'dimensions' => 'ga:pagePath',
-    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+    'metrics'    => 'ga:pageviews',
     'filters'    => 'ga:pagePath=@galleries'
  }).data.totals_for_all_results
 
@@ -351,7 +356,7 @@ end
     'start-date' => @LM2,
     'end-date'   => @LM3,
     'dimensions' => 'ga:pagePath',
-    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+    'metrics'    => 'ga:pageviews',
     'filters'    => 'ga:pagePath=@artists'
  }).data.totals_for_all_results
 
@@ -361,7 +366,7 @@ end
     'start-date' => @LM2,
     'end-date'   => @LM3,
     'dimensions' => 'ga:pagePath',
-    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+    'metrics'    => 'ga:pageviews',
     'filters'    => 'ga:pagePath=@first-look'
  }).data.totals_for_all_results
 
@@ -456,7 +461,7 @@ end
     'start-date' => @MTD,
     'end-date'   => @today,
     'dimensions' => 'ga:pagePath',
-    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+    'metrics'    => 'ga:pageviews',
     'filters'    => 'ga:pagePath=@galleries'
  }).data.totals_for_all_results
 
@@ -466,7 +471,7 @@ end
     'start-date' => @MTD,
     'end-date'   => @today,
     'dimensions' => 'ga:pagePath',
-    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+    'metrics'    => 'ga:pageviews',
     'filters'    => 'ga:pagePath=@artists'
  }).data.totals_for_all_results
 
@@ -476,7 +481,7 @@ end
     'start-date' => @MTD,
     'end-date'   => @today,
     'dimensions' => 'ga:pagePath',
-    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+    'metrics'    => 'ga:pageviews',
     'filters'    => 'ga:pagePath=@first-look'
  }).data.totals_for_all_results
 
@@ -508,7 +513,7 @@ end
     'start-date' => @MTD2,
     'end-date'   => @MTD3,
     'dimensions' => 'ga:pagePath',
-    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+    'metrics'    => 'ga:pageviews',
     'filters'    => 'ga:pagePath=@galleries'
  }).data.totals_for_all_results
 
@@ -518,7 +523,7 @@ end
     'start-date' => @MTD2,
     'end-date'   => @MTD3,
     'dimensions' => 'ga:pagePath',
-    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+    'metrics'    => 'ga:pageviews',
     'filters'    => 'ga:pagePath=@artists'
  }).data.totals_for_all_results
 
@@ -528,7 +533,7 @@ end
     'start-date' => @MTD2,
     'end-date'   => @MTD3,
     'dimensions' => 'ga:pagePath',
-    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+    'metrics'    => 'ga:pageviews',
     'filters'    => 'ga:pagePath=@first-look'
  }).data.totals_for_all_results
 
@@ -628,7 +633,7 @@ end
     'start-date' => @LY,
     'end-date'   => @today,
     'dimensions' => 'ga:pagePath',
-    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+    'metrics'    => 'ga:pageviews',
     'filters'    => 'ga:pagePath=@galleries'
  }).data.totals_for_all_results
 
@@ -638,7 +643,7 @@ end
     'start-date' => @LY,
     'end-date'   => @today,
     'dimensions' => 'ga:pagePath',
-    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+    'metrics'    => 'ga:pageviews',
     'filters'    => 'ga:pagePath=@artists'
  }).data.totals_for_all_results
 
@@ -648,7 +653,7 @@ end
     'start-date' => @LY,
     'end-date'   => @today,
     'dimensions' => 'ga:pagePath',
-    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+    'metrics'    => 'ga:pageviews',
     'filters'    => 'ga:pagePath=@first-look'
  }).data.totals_for_all_results
 
@@ -681,7 +686,7 @@ end
     'start-date' => @LY2,
     'end-date'   => @LY3,
     'dimensions' => 'ga:pagePath',
-    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+    'metrics'    => 'ga:pageviews',
     'filters'    => 'ga:pagePath=@galleries'
  }).data.totals_for_all_results
 
@@ -691,7 +696,7 @@ end
     'start-date' => @LY2,
     'end-date'   => @LY3,
     'dimensions' => 'ga:pagePath',
-    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+    'metrics'    => 'ga:pageviews',
     'filters'    => 'ga:pagePath=@artists'
  }).data.totals_for_all_results
 
@@ -701,7 +706,7 @@ end
     'start-date' => @LY2,
     'end-date'   => @LY3,
     'dimensions' => 'ga:pagePath',
-    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+    'metrics'    => 'ga:pageviews',
     'filters'    => 'ga:pagePath=@first-look'
  }).data.totals_for_all_results
 
@@ -796,7 +801,7 @@ end
     'start-date' => @YTD,
     'end-date'   => @today,
     'dimensions' => 'ga:pagePath',
-    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+    'metrics'    => 'ga:pageviews',
     'filters'    => 'ga:pagePath=@galleries'
  }).data.totals_for_all_results
 
@@ -806,7 +811,7 @@ end
     'start-date' => @YTD,
     'end-date'   => @today,
     'dimensions' => 'ga:pagePath',
-    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+    'metrics'    => 'ga:pageviews',
     'filters'    => 'ga:pagePath=@artists'
  }).data.totals_for_all_results
 
@@ -816,7 +821,7 @@ end
     'start-date' => @YTD,
     'end-date'   => @today,
     'dimensions' => 'ga:pagePath',
-    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+    'metrics'    => 'ga:pageviews',
     'filters'    => 'ga:pagePath=@first-look'
  }).data.totals_for_all_results
 
@@ -848,7 +853,7 @@ end
     'start-date' => @YTD2,
     'end-date'   => @YTD3,
     'dimensions' => 'ga:pagePath',
-    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+    'metrics'    => 'ga:pageviews',
     'filters'    => 'ga:pagePath=@galleries'
  }).data.totals_for_all_results
 
@@ -858,7 +863,7 @@ end
     'start-date' => @YTD2,
     'end-date'   => @YTD3,
     'dimensions' => 'ga:pagePath',
-    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+    'metrics'    => 'ga:pageviews',
     'filters'    => 'ga:pagePath=@artists'
  }).data.totals_for_all_results
 
@@ -868,7 +873,7 @@ end
     'start-date' => @YTD2,
     'end-date'   => @YTD3,
     'dimensions' => 'ga:pagePath',
-    'metrics'    => 'ga:sessions, ga:pageviews, ga:users, ga:pageviewsPerSession, ga:bounceRate, ga:avgSessionDuration',
+    'metrics'    => 'ga:pageviews',
     'filters'    => 'ga:pagePath=@first-look'
  }).data.totals_for_all_results
 

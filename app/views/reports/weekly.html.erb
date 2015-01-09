@@ -1,40 +1,60 @@
-<a href="/weekly" class="btn btn-primary btn" role="button">Weekly</a>&nbsp;&nbsp;&nbsp;&nbsp;
-<a href="/monthly" class="btn btn-primary btn" role="button">Monthly</a>&nbsp;&nbsp;&nbsp;&nbsp;
-<a href="/yearly" class="btn btn-primary btn" role="button">Yearly</a>
-
+<h2>ONE NATION</h2>
 <h2>Week Over Week</h2>
 <%= @LW %> to <%= @today %> &nbsp;&nbsp;<strong>vs</strong>&nbsp;&nbsp; <%= @LW2 %> to <%= @LW3 %>
 <br><br>
 <table class="table">
+
   <th></th><th>This Week</th><th>Last Week</th><th>% Change</th>
+
   <tr class= <%= @TYrow_color %>>
   	<td>Visits: </td>
-  	<td> <%= number_with_delimiter(@tyVisits.round, :delimiter => ',') %>  </td><td> <%= number_with_delimiter(@lyVisits.round, :delimiter => ',') %> </td><td> <%= (((@tyVisits - @lyVisits) / @lyVisits) *100).round(2) %>% </td>
+  	<td> <%= number_with_delimiter(@tyVisits.round, :delimiter => ',') %>  </td>
+    <td> <%= number_with_delimiter(@lyVisits.round, :delimiter => ',') %> </td>
+    <td> <%= (((@tyVisits - @lyVisits) / @lyVisits) *100).round(2) %>% </td>
   </tr>
+
   <tr class= <%= @UVrow_color %>>
   	<td>Unique Visitors: </td>
-  	<td> <%= number_with_delimiter(@tyUniqueVisitors.round, :delimiter => ',') %> </td><td> <%= number_with_delimiter(@lyUniqueVisitors.round, :delimiter => ',') %> </td><td> <%= (((@tyUniqueVisitors - @lyUniqueVisitors) / @lyUniqueVisitors)*100).round(2) %>% </td>
+  	<td> <%= number_with_delimiter(@tyUniqueVisitors.round, :delimiter => ',') %> </td>
+    <td> <%= number_with_delimiter(@lyUniqueVisitors.round, :delimiter => ',') %> </td>
+    <td> <%= (((@tyUniqueVisitors - @lyUniqueVisitors) / @lyUniqueVisitors)*100).round(2) %>% </td>
   </tr>
+
   <tr class= <%= @PVrow_color %>>
   	<td>Pageviews: </td>
-  	<td> <%= number_with_delimiter(@tyPageviews.round, :delimiter => ',') %> </td><td> <%= number_with_delimiter(@lyPageviews.round, :delimiter => ',') %> </td><td> <%= (((@tyPageviews - @lyPageviews) / @lyPageviews)*100).round(2) %>% </td>
+  	<td> <%= number_with_delimiter(@tyPageviews.round, :delimiter => ',') %> </td>
+    <td> <%= number_with_delimiter(@lyPageviews.round, :delimiter => ',') %> </td>
+    <td> <%= (((@tyPageviews - @lyPageviews) / @lyPageviews)*100).round(2) %>% </td>
   </tr>
+
   <tr class= <%= @PHrow_color %>>
   	<td>Photo Views: </td>
-  	<td> <%= number_with_delimiter(@tyPhotoViews.round, :delimiter => ',') %>  </td><td> <%= number_with_delimiter(@lyPhotoViews.round, :delimiter => ',') %> </td><td> <%= (((@tyPhotoViews - @lyPhotoViews) / @lyPhotoViews)*100).round(2) %>% </td>
+  	<td> <%= number_with_delimiter(@tyPhotoViews.round, :delimiter => ',') %>  </td>
+    <td> <%= number_with_delimiter(@lyPhotoViews.round, :delimiter => ',') %> </td>
+    <td> <%= (((@tyPhotoViews - @lyPhotoViews) / @lyPhotoViews)*100).round(2) %>% </td>
   </tr>
+
     <tr class= <%= @PPVrow_color %>>
   	<td>Pageviews Per Visit: </td>
-  	<td> <%= @tyPPV %> </td><td> <%= @lyPPV %> </td><td> <%= (((@tyPPV - @lyPPV) / @lyPPV)*100).round(2) %>% </td>
+  	<td> <%= @tyPPV %> </td>
+    <td> <%= @lyPPV %> </td>
+    <td> <%= (((@tyPPV - @lyPPV) / @lyPPV)*100).round(2) %>% </td>
   </tr>
+
     <tr class= <%= @Brow_color %>>
   	<td>Bounce Rate: </td>
-  	<td> <%= @tyBounce %>% </td><td> <%= @lyBounce %>% </td><td> <%= (((@tyBounce - @lyBounce) / @lyBounce)*100).round(2) %>% </td>
+  	<td> <%= @tyBounce %>% </td>
+    <td> <%= @lyBounce %>% </td>
+    <td> <%= (((@tyBounce - @lyBounce) / @lyBounce)*100).round(2) %>% </td>
   </tr>
+
     <tr class= <%= @VDrow_color %>>
   	<td>Visit Duration: </td>
-  	<td> <%= @avgTYVisitDuration %> </td><td> <%= @avgLYVisitDuration %> </td><td> <%= (((@avgTYVD - @avgLYVD) / @avgLYVD)*100).round(2) %>% </td>
+  	<td> <%= @avgTYVisitDuration %> </td>
+    <td> <%= @avgLYVisitDuration %> </td>
+    <td> <%= (((@avgTYVD - @avgLYVD) / @avgLYVD)*100).round(2) %>% </td>
   </tr>
+
 </table>
 
 
@@ -68,3 +88,4 @@ Top Traffic Sources:
 
 
 <%= @generic_result %> 
+<br>

@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
-ruby "2.0.0"
+# uncomment out for heroku pushes
+# ruby "2.0.0"
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
