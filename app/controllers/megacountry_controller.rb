@@ -1,31 +1,31 @@
 class MegacountryController < ApplicationController
 
-# before_filter :authorize
+before_filter :authorize
 
 # GA API access
-# def visitor 
-#   @SERVICE_ACCOUNT_EMAIL_ADDRESS = '' # looks like 12345@developer.gserviceaccount.com
-#   @PATH_TO_KEY_FILE              = "#{Rails.root}/app/controllers/GA_Dashboard-1f3726b11932.p12"
-#   @PROFILE                       = '' # your GA profile id, looks like 'ga:12345'
+def visitor 
+  @SERVICE_ACCOUNT_EMAIL_ADDRESS = '531415866364-79jrcenopjhsu5she7m9gn34pt5l6t0g@developer.gserviceaccount.com ' # looks like 12345@developer.gserviceaccount.com
+  @PATH_TO_KEY_FILE              = "#{Rails.root}/app/controllers/GA_Dashboard-1f3726b11932.p12"
+  @PROFILE                       = '87982558' # your GA profile id, looks like 'ga:12345'
 
 
-#   require 'json'
-#   require 'google/api_client'
+  require 'json'
+  require 'google/api_client'
 
-#   # set up a client instance
-#   @client  = Google::APIClient.new
+  # set up a client instance
+  @client  = Google::APIClient.new
 
-#   @client.authorization = Signet::OAuth2::Client.new(
-#     :token_credential_uri => 'https://accounts.google.com/o/oauth2/token',
-#     :audience             => 'https://accounts.google.com/o/oauth2/token',
-#     :scope                => 'https://www.googleapis.com/auth/analytics.readonly',
-#     :issuer               => @SERVICE_ACCOUNT_EMAIL_ADDRESS,
-#     :signing_key          => Google::APIClient::PKCS12.load_key(@PATH_TO_KEY_FILE, 'notasecret')
-#   ).tap { |auth| auth.fetch_access_token! }
+  @client.authorization = Signet::OAuth2::Client.new(
+    :token_credential_uri => 'https://accounts.google.com/o/oauth2/token',
+    :audience             => 'https://accounts.google.com/o/oauth2/token',
+    :scope                => 'https://www.googleapis.com/auth/analytics.readonly',
+    :issuer               => @SERVICE_ACCOUNT_EMAIL_ADDRESS,
+    :signing_key          => Google::APIClient::PKCS12.load_key(@PATH_TO_KEY_FILE, 'notasecret')
+  ).tap { |auth| auth.fetch_access_token! }
 
-#   @api_method = @client.discovered_api('analytics','v3').data.ga.get
+  @api_method = @client.discovered_api('analytics','v3').data.ga.get
 
-# end
+end
 
 def time
     # defines 'time' for header comparitive dates

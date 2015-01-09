@@ -10,7 +10,7 @@
   	<td> <%= number_with_delimiter(@tyVisits2.round, :delimiter => ',') %>  </td><td> <%= number_with_delimiter(@lyVisits2.round, :delimiter => ',') %> </td><td> <%= (((@tyVisits2 - @lyVisits2) / @lyVisits2) *100).round(2) %>% </td>
   </tr>
   <tr class= <%= @UVrow_color2 %>>
-  	<td>Unique Visitors: </td>
+  	<td>Unique Visitors: <br> <strong>**this is not working right now, <br>please check GA!</strong></td>
   	<td> <%= number_with_delimiter(@tyUniqueVisitors2.round, :delimiter => ',') %> </td><td> <%= number_with_delimiter(@lyUniqueVisitors2.round, :delimiter => ',') %> </td><td> <%= (((@tyUniqueVisitors2 - @lyUniqueVisitors2) / @lyUniqueVisitors2)*100).round(2) %>% </td>
   </tr>
   <tr class= <%= @PVrow_color2 %>>
@@ -49,7 +49,7 @@
   	<td> <%= number_with_delimiter(@tyVisits.round, :delimiter => ',') %>  </td><td> <%= number_with_delimiter(@lyVisits.round, :delimiter => ',') %> </td><td> <%= (((@tyVisits - @lyVisits) / @lyVisits) *100).round(2) %>% </td>
   </tr>
   <tr class= <%= @UVrow_color %>>
-  	<td>Unique Visitors: </td>
+  	<td>Unique Visitors: <br> <strong>**this is not working right now, <br>please check GA!</strong></td>
   	<td> <%= number_with_delimiter(@tyUniqueVisitors.round, :delimiter => ',') %> </td><td> <%= number_with_delimiter(@lyUniqueVisitors.round, :delimiter => ',') %> </td><td> <%= (((@tyUniqueVisitors - @lyUniqueVisitors) / @lyUniqueVisitors)*100).round(2) %>% </td>
   </tr>
   <tr class= <%= @PVrow_color %>>

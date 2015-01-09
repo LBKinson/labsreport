@@ -14,7 +14,7 @@
   </tr>
 
   <tr class= <%= @UVrow_color %>>
-  	<td>Unique Visitors: </td>
+  	<td>Unique Visitors: <br> <strong>**this is not working right now, <br>please check GA!</strong></td>
   	<td> <%= number_with_delimiter(@tyUniqueVisitors.round, :delimiter => ',') %> </td>
     <td> <%= number_with_delimiter(@lyUniqueVisitors.round, :delimiter => ',') %> </td>
     <td> <%= (((@tyUniqueVisitors - @lyUniqueVisitors) / @lyUniqueVisitors)*100).round(2) %>% </td>
