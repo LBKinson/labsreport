@@ -1,7 +1,7 @@
 class MegacountryController < ApplicationController
 
 # commented out for dev, MUST COMMENT BACK IN FOR PRODUCTION
-# before_filter :authorize
+before_filter :authorize
 
 # GA API access
 def visitor 
