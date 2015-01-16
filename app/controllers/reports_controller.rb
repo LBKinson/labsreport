@@ -1,11 +1,12 @@
 class ReportsController < ApplicationController
 
-before_filter :authorize
+# commented out for dev, MUST COMMENT BACK IN FOR PRODUCTION
+# before_filter :authorize
 
-# GA API access
+# GA API access     AIzaSyATHWpIVojI9ii_cHy9kdL2fbogEeghY7o
 def visitor 
   @SERVICE_ACCOUNT_EMAIL_ADDRESS = '154515577302-e7esj1h0cnnrmulevvujumjv1m3hjk9c@developer.gserviceaccount.com' # looks like 12345@developer.gserviceaccount.com
-  @PATH_TO_KEY_FILE              = "#{Rails.root}/app/controllers/GA_Dashboard-1f3726b11932.p12"
+  @PATH_TO_KEY_FILE              = "#{Rails.root}/app/controllers/ON_Dashboard-66376614.p12"
   @PROFILE                       = 'ga:66376614' # your GA profile id, looks like 'ga:12345'
 
 
