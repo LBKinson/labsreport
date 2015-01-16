@@ -25,7 +25,7 @@
     <% if current_user %>
       Today is <%= @weekday %>, <%= @header_today %>| Logged in as <%= current_user.first_name %> <%= current_user.last_name %> | <%= link_to "Logout", '/logout' %>
 
-        <br>
+        <br><br><br>
     <a href="/weekly" class="btn btn-primary btn" role="button">Weekly</a>&nbsp;&nbsp;&nbsp;&nbsp;
     <a href="/monthly" class="btn btn-primary btn" role="button">Monthly</a>&nbsp;&nbsp;&nbsp;&nbsp;
     <a href="/yearly" class="btn btn-primary btn" role="button">Yearly</a>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -35,7 +35,7 @@
 
     <% end %>
   </div>
-
+  <br><br>
   <h2><%= link_to 'The LabsReport', '/report' %></h2>
 
 <%= yield %>
