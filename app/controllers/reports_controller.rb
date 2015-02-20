@@ -1,7 +1,7 @@
 class ReportsController < ApplicationController
 
 # commented out for dev, MUST COMMENT BACK IN FOR PRODUCTION
-before_filter :authorize
+# before_filter :authorize
 
 # GA API access     AIzaSyATHWpIVojI9ii_cHy9kdL2fbogEeghY7o
 def visitor 
@@ -146,10 +146,10 @@ end
  }).data.totals_for_all_results
 
     # this year data variables
-    @tyVisits = this_year_result['ga:sessions'].to_f
-    @tyUniqueVisitors = this_year_result['ga:users'].to_f
-    @tyPageviews = this_year_result['ga:pageviews'].to_f
-    @tyPhotoViews = photoViewsGalleries['ga:pageviews'].to_f + photoViewsArtists['ga:pageviews'].to_f + photoViewsFirstLook['ga:pageviews'].to_f
+    @tyVisits = this_year_result['ga:sessions'].to_f.round
+    @tyUniqueVisitors = this_year_result['ga:users'].to_f.round
+    @tyPageviews = this_year_result['ga:pageviews'].to_f.round
+    @tyPhotoViews = photoViewsGalleries['ga:pageviews'].to_f.round + photoViewsArtists['ga:pageviews'].to_f.round + photoViewsFirstLook['ga:pageviews'].to_f.round
     @tyPPV = this_year_result['ga:pageviewsPerSession'].to_f.round(2)
     @tyBounce = this_year_result['ga:bounceRate'].to_f.round(2)
     @avgTYVisitDuration = Time.at(this_year_result['ga:avgSessionDuration'].to_f).utc.strftime("%H:%M:%S")
@@ -198,10 +198,10 @@ end
  }).data.totals_for_all_results
 
     # last year data variables
-    @lyVisits = last_year_result['ga:sessions'].to_f
-    @lyUniqueVisitors = last_year_result['ga:users'].to_f
-    @lyPageviews = last_year_result['ga:pageviews'].to_f
-    @lyPhotoViews = lyphotoViewsGalleries['ga:pageviews'].to_f + lyphotoViewsArtists['ga:pageviews'].to_f + lyphotoViewsFirstLook['ga:pageviews'].to_f
+    @lyVisits = last_year_result['ga:sessions'].to_f.round
+    @lyUniqueVisitors = last_year_result['ga:users'].to_f.round
+    @lyPageviews = last_year_result['ga:pageviews'].to_f.round
+    @lyPhotoViews = lyphotoViewsGalleries['ga:pageviews'].to_f.round + lyphotoViewsArtists['ga:pageviews'].to_f.round + lyphotoViewsFirstLook['ga:pageviews'].to_f.round
     @lyPPV = last_year_result['ga:pageviewsPerSession'].to_f.round(2)
     @lyBounce = last_year_result['ga:bounceRate'].to_f.round(2)
     @avgLYVisitDuration = Time.at(last_year_result['ga:avgSessionDuration'].to_f).utc.strftime("%H:%M:%S")
