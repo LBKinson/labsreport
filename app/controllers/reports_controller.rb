@@ -1,7 +1,7 @@
 class ReportsController < ApplicationController
 
 # commented out for dev, MUST COMMENT BACK IN FOR PRODUCTION
-# before_filter :authorize
+before_filter :authorize
 
 # GA API access     AIzaSyATHWpIVojI9ii_cHy9kdL2fbogEeghY7o
 def visitor 
