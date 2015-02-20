@@ -13,29 +13,29 @@
 
   <tr class= <%= @TYrow_color %>>
     <td>Visits: </td>
-    <td> <%= number_with_delimiter(@tyVisits.round, :delimiter => ',') %>  </td>
-    <td> <%= number_with_delimiter(@lyVisits.round, :delimiter => ',') %> </td>
+    <td> <%= number_with_delimiter(@tyVisits, :delimiter => ',') %>  </td>
+    <td> <%= number_with_delimiter(@lyVisits, :delimiter => ',') %> </td>
     <td> <%= (((@tyVisits - @lyVisits) / @lyVisits) *100).round(2) %>% </td>
   </tr>
 
   <tr class= <%= @UVrow_color %>>
     <td>Unique Visitors: <br> <strong>**this is not working right now, <br>please check GA!</strong></td>
-    <td> <%= number_with_delimiter(@tyUniqueVisitors.round, :delimiter => ',') %> </td>
-    <td> <%= number_with_delimiter(@lyUniqueVisitors.round, :delimiter => ',') %> </td>
+    <td> <%= number_with_delimiter(@tyUniqueVisitors, :delimiter => ',') %> </td>
+    <td> <%= number_with_delimiter(@lyUniqueVisitors, :delimiter => ',') %> </td>
     <td> <%= (((@tyUniqueVisitors - @lyUniqueVisitors) / @lyUniqueVisitors)*100).round(2) %>% </td>
   </tr>
 
   <tr class= <%= @PVrow_color %>>
     <td>Pageviews: </td>
-    <td> <%= number_with_delimiter(@tyPageviews.round, :delimiter => ',') %> </td>
-    <td> <%= number_with_delimiter(@lyPageviews.round, :delimiter => ',') %> </td>
+    <td> <%= number_with_delimiter(@tyPageviews, :delimiter => ',') %> </td>
+    <td> <%= number_with_delimiter(@lyPageviews, :delimiter => ',') %> </td>
     <td> <%= (((@tyPageviews - @lyPageviews) / @lyPageviews)*100).round(2) %>% </td>
   </tr>
 
   <tr class= <%= @PHrow_color %>>
     <td>Photo Views: </td>
-    <td> <%= number_with_delimiter(@tyPhotoViews.round, :delimiter => ',') %>  </td>
-    <td> <%= number_with_delimiter(@lyPhotoViews.round, :delimiter => ',') %> </td>
+    <td> <%= number_with_delimiter(@tyPhotoViews, :delimiter => ',') %>  </td>
+    <td> <%= number_with_delimiter(@lyPhotoViews, :delimiter => ',') %> </td>
     <td> <%= (((@tyPhotoViews - @lyPhotoViews) / @lyPhotoViews)*100).round(2) %>% </td>
   </tr>
 

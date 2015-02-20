@@ -11,19 +11,19 @@
   <th></th><th>This Month</th><th>Last Month</th><th>% Change</th>
   <tr class= <%= @TYrow_color2 %>>
   	<td>Visits: </td>
-  	<td> <%= number_with_delimiter(@tyVisits2.round, :delimiter => ',') %>  </td><td> <%= number_with_delimiter(@lyVisits2.round, :delimiter => ',') %> </td><td> <%= (((@tyVisits2 - @lyVisits2) / @lyVisits2) *100).round(2) %>% </td>
+  	<td> <%= number_with_delimiter(@tyVisits2, :delimiter => ',') %>  </td><td> <%= number_with_delimiter(@lyVisits2, :delimiter => ',') %> </td><td> <%= (((@tyVisits2 - @lyVisits2) / @lyVisits2) *100).round(2) %>% </td>
   </tr>
   <tr class= <%= @UVrow_color2 %>>
   	<td>Unique Visitors: <br> <strong>**this is not working right now, <br>please check GA!</strong></td>
-  	<td> <%= number_with_delimiter(@tyUniqueVisitors2.round, :delimiter => ',') %> </td><td> <%= number_with_delimiter(@lyUniqueVisitors2.round, :delimiter => ',') %> </td><td> <%= (((@tyUniqueVisitors2 - @lyUniqueVisitors2) / @lyUniqueVisitors2)*100).round(2) %>% </td>
+  	<td> <%= number_with_delimiter(@tyUniqueVisitors2, :delimiter => ',') %> </td><td> <%= number_with_delimiter(@lyUniqueVisitors2, :delimiter => ',') %> </td><td> <%= (((@tyUniqueVisitors2 - @lyUniqueVisitors2) / @lyUniqueVisitors2)*100).round(2) %>% </td>
   </tr>
   <tr class= <%= @PVrow_color2 %>>
   	<td>Pageviews: </td>
-  	<td> <%= number_with_delimiter(@tyPageviews2.round, :delimiter => ',') %> </td><td> <%= number_with_delimiter(@lyPageviews2.round, :delimiter => ',') %> </td><td> <%= (((@tyPageviews2 - @lyPageviews2) / @lyPageviews2)*100).round(2) %>% </td>
+  	<td> <%= number_with_delimiter(@tyPageviews2, :delimiter => ',') %> </td><td> <%= number_with_delimiter(@lyPageviews2, :delimiter => ',') %> </td><td> <%= (((@tyPageviews2 - @lyPageviews2) / @lyPageviews2)*100).round(2) %>% </td>
   </tr>
   <tr class= <%= @PHrow_color2 %>>
   	<td>Photo Views: </td>
-  	<td> <%= number_with_delimiter(@tyPhotoViews2.round, :delimiter => ',') %>  </td><td> <%= number_with_delimiter(@lyPhotoViews2.round, :delimiter => ',') %> </td><td> <%= (((@tyPhotoViews2 - @lyPhotoViews2) / @lyPhotoViews2)*100).round(2) %>% </td>
+  	<td> <%= number_with_delimiter(@tyPhotoViews2, :delimiter => ',') %>  </td><td> <%= number_with_delimiter(@lyPhotoViews2, :delimiter => ',') %> </td><td> <%= (((@tyPhotoViews2 - @lyPhotoViews2) / @lyPhotoViews2)*100).round(2) %>% </td>
   </tr>
     <tr class= <%= @PPVrow_color2 %>>
   	<td>Pageviews Per Visit: </td>
@@ -52,19 +52,19 @@
   <th></th><th>This Year</th><th>Last Year</th><th>% Change</th>
   <tr class= <%= @TYrow_color %>>
   	<td>Visits: </td>
-  	<td> <%= number_with_delimiter(@tyVisits.round, :delimiter => ',') %>  </td><td> <%= number_with_delimiter(@lyVisits.round, :delimiter => ',') %> </td><td> <%= (((@tyVisits - @lyVisits) / @lyVisits) *100).round(2) %>% </td>
+  	<td> <%= number_with_delimiter(@tyVisits, :delimiter => ',') %>  </td><td> <%= number_with_delimiter(@lyVisits, :delimiter => ',') %> </td><td> <%= (((@tyVisits - @lyVisits) / @lyVisits) *100).round(2) %>% </td>
   </tr>
   <tr class= <%= @UVrow_color %>>
   	<td>Unique Visitors: <br> <strong>**this is not working right now, <br>please check GA!</strong></td>
-  	<td> <%= number_with_delimiter(@tyUniqueVisitors.round, :delimiter => ',') %> </td><td> <%= number_with_delimiter(@lyUniqueVisitors.round, :delimiter => ',') %> </td><td> <%= (((@tyUniqueVisitors - @lyUniqueVisitors) / @lyUniqueVisitors)*100).round(2) %>% </td>
+  	<td> <%= number_with_delimiter(@tyUniqueVisitors, :delimiter => ',') %> </td><td> <%= number_with_delimiter(@lyUniqueVisitors, :delimiter => ',') %> </td><td> <%= (((@tyUniqueVisitors - @lyUniqueVisitors) / @lyUniqueVisitors)*100).round(2) %>% </td>
   </tr>
   <tr class= <%= @PVrow_color %>>
   	<td>Pageviews: </td>
-  	<td> <%= number_with_delimiter(@tyPageviews.round, :delimiter => ',') %> </td><td> <%= number_with_delimiter(@lyPageviews.round, :delimiter => ',') %> </td><td> <%= (((@tyPageviews - @lyPageviews) / @lyPageviews)*100).round(2) %>% </td>
+  	<td> <%= number_with_delimiter(@tyPageviews, :delimiter => ',') %> </td><td> <%= number_with_delimiter(@lyPageviews, :delimiter => ',') %> </td><td> <%= (((@tyPageviews - @lyPageviews) / @lyPageviews)*100).round(2) %>% </td>
   </tr>
   <tr class= <%= @PHrow_color %>>
   	<td>Photo Views: </td>
-  	<td> <%= number_with_delimiter(@tyPhotoViews.round, :delimiter => ',') %>  </td><td> <%= number_with_delimiter(@lyPhotoViews.round, :delimiter => ',') %> </td><td> <%= (((@tyPhotoViews - @lyPhotoViews) / @lyPhotoViews)*100).round(2) %>% </td>
+  	<td> <%= number_with_delimiter(@tyPhotoViews, :delimiter => ',') %>  </td><td> <%= number_with_delimiter(@lyPhotoViews, :delimiter => ',') %> </td><td> <%= (((@tyPhotoViews - @lyPhotoViews) / @lyPhotoViews)*100).round(2) %>% </td>
   </tr>
     <tr class= <%= @PPVrow_color %>>
   	<td>Pageviews Per Visit: </td>
