@@ -74,6 +74,9 @@ def time
     @LY2 = (time-(60 * 60 * 24 * 730)).strftime('%Y-%m-%d')
     @LY3 = (time-(60 * 60 * 24 * 366)).strftime('%Y-%m-%d')
 
+
+    date_select("report_date", "selected_date", start_year: 2012, use_month_numbers: true, )
+
 end
 
 
